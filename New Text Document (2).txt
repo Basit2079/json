@@ -1,0 +1,303 @@
+#include<iostream.h>
+#include<conio.h>
+#include<process.h>
+struct node  
+{ 
+	int data;
+	node *next;
+	node *previous;
+};
+
+class linklist
+{
+	node *current;
+
+	node *first;
+public:
+	linklist ()
+	{
+		current=NULL;
+		first=NULL;
+	}
+
+	void addnode ();
+	void showlinkliststart ();
+	void addnodestart ();
+	void showlinklistend ();
+	void searchlist ();
+	void addnodemid ();
+	void deletenodestart ();
+	void deletenodeend ();
+	void deletenodemid ();
+};
+void linklist ::deletenodemid ()
+{
+	node* temp=first;
+	int z;
+	cout<<"enter number you want to delete"<<endl;
+	cin>>z;
+	while (temp!=NULL && z!=temp->data)
+	{
+		temp=temp->next;
+	}
+	if (temp->previous==NULL)
+	{
+		temp=temp->next;
+		temp->previous=NULL;
+		first=temp;
+		cout<<"deleted node"<<endl;
+
+	}
+	else if (temp->next==NULL)
+	{
+		temp->previous->next=NULL;
+		temp=temp->previous;
+		current=temp;
+
+	}
+	else 
+	{
+		temp->previous->next=temp->next;
+		temp->next->previous=temp->previous;
+		cout<<"deleted node"<<endl;
+		
+	}
+}
+void linklist ::addnodemid ()
+{
+	node * temp;
+	temp=first;
+	int n;
+	cout<<"enter value you want to insert data"<<endl;
+	cin>>n;
+	while (temp!=NULL && n!=temp->data)
+	{
+		temp=temp->next;
+	}
+	if (temp->next==NULL)
+	{
+		node * newitem;    
+		newitem= new node; 
+		cout<<"enter the data"<<endl;
+		cin>>newitem->data;
+		newitem->next=NULL;
+		newitem->previous=current;
+		current=newitem;
+	}
+	else if (temp->previous==NULL)
+	{
+		node * newitem= new node; 
+		cout<<"enter the data"<<endl;
+		cin>>newitem->data;
+		newitem->next=first;
+		first->previous=newitem;
+		newitem->previous=NULL;
+		first=newitem;
+	}
+	else 
+	{
+		node * newitem;    
+		newitem= new node; 
+		cout<<"enter the data"<<endl;
+		cin>>newitem->data;
+		newitem->next=temp->next;
+		newitem->previous=temp;
+		temp->next=newitem;
+		newitem->next->previous=newitem;
+	}
+
+
+}
+void linklist::deletenodestart ()
+{
+	node * temp=first;
+	temp=temp->next;
+	temp->previous=NULL;
+	first=temp;
+	cout<<"deleted first node"<<endl;
+}
+void linklist::deletenodeend ()
+{
+	node *temp=first;
+	while (temp->next->next!=NULL)
+	{
+		temp=temp->next;
+	}
+	temp->next=NULL;
+	current=temp;
+	cout<<"delete last node "<<endl;
+}
+void linklist::searchlist ()
+{
+	int n;
+	int flag=0;
+	node * temp=first;
+	cout<<"enter search number"<<endl;
+	cin>>n;
+	while (temp!=NULL)
+	{
+		if (first==NULL)
+		{
+			cout<<endl<<"list is empty"<<endl;
+		}
+	else if (n==temp->data)
+	{
+		flag=1;
+		break;
+	}
+	temp=temp->next;
+	}
+	if (flag==1)
+	{
+		cout<<"number found"<<endl;
+	}
+	else
+	{
+		cout<<"number not found"<<endl;
+	}
+}
+
+
+
+void linklist::addnode ()
+{
+	node * newitem;    
+	newitem= new node; 
+	cout<<"enter the data"<<endl;
+	cin>>newitem->data; 
+
+if (first==NULL)  
+{
+	newitem->next= current; 
+	newitem->previous=current;
+	first=current=newitem;  
+}
+
+else   
+{
+
+	newitem->next=first;   
+	newitem->previous=current;
+	current->next=newitem;  
+	current=newitem;       
+}
+}
+
+void linklist::showlinkliststart  ()
+{
+	if (first==NULL)
+	{
+		cout<<"cannot create list"<<endl;
+	}
+	else
+	{
+	node *temp;
+	temp=first;
+	cout<<endl<<"your data is : "<<endl;
+		while (temp->next!=first)
+		{
+		
+			cout<<temp->data<<endl; 
+			temp=temp->next;
+			
+		}
+	}
+}
+void linklist::showlinklistend ()
+{
+	if (current==NULL)
+	{
+		cout<<"cannot create the list"<<endl;
+	}
+	else
+	{
+		node *temp;
+		temp=current;
+		cout<<endl<<"your data is "<<endl;
+		while (temp!=NULL)
+		{
+			cout<<temp->data<<endl;
+			temp=temp->previous;
+		}
+	}
+}
+
+
+
+void linklist::addnodestart ()
+{
+	if (first==NULL)
+	{
+		cout<<"cannot create node at the start of linklist"<<endl;
+	}
+	else
+	{
+		node * newitem;
+    	newitem=new node;
+		cout<<"enter the data"<<endl;
+		cin>>newitem->data;
+		newitem->next=first;
+		first->previous=newitem;
+		newitem->previous=NULL;
+		first=newitem;
+	}
+}
+int main ()
+{
+
+int n; 
+linklist l;  
+
+do
+{
+  cout<<endl<<endl<<"-----Link list implementation started-----"<<endl<<endl;
+  cout<<"------press proper option plz------"<<endl<<endl;
+  cout<<"press 1. to add node in the list"<<endl;
+  cout<<"press 2. to show list start"<<endl;
+  cout<<"pres  3. to show list end"<<endl;
+  cout<<"pres  4. to add node first"<<endl;
+  cout<<"pres  5. to add node Middle"<<endl;
+  cout<<"pres  6. to search number in the list"<<endl;
+  cout<<"pres  7. to delete node from starts"<<endl;
+  cout<<"pres  8. to delete node from end"<<endl;
+  cout<<"press 9. to delete node from middle"<<endl;
+  cout<<"press 10. to exit from programe"<<endl;
+  cout<<"Enter your option now:  "<<endl;
+  cin>> n;
+
+switch (n)
+{
+ case 1:
+		l.addnode();
+		break;
+case 2:
+		l.showlinkliststart ();
+		break;
+case 3:
+		l.showlinklistend ();
+     	break;
+case 4:
+	    l.addnodestart ();
+			break; 
+case 5:
+	    l.addnodemid ();
+		break;
+case 6:
+	    l.searchlist ();
+		break;
+
+case 7: l.deletenodestart ();
+	    break;
+
+case 8: l.deletenodeend ();
+	    break;
+		
+case 9:	l.deletenodemid ();
+		break;
+case 10:exit (0);
+		break;
+}
+}
+while(1);
+return 0;
+}
